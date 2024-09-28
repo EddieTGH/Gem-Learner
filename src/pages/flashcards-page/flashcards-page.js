@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../../components/supabaseClient";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import "./flashcards-page.css";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../components/supabaseClient';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import './flashcards-page.css';
 
 function FlashcardsPage({ user }) {
   // Accept user as a prop
@@ -16,12 +16,12 @@ function FlashcardsPage({ user }) {
       // Ensure user is passed as a prop and has an id
       const fetchFlashcards = async () => {
         const { data, error } = await supabase
-          .from("Flashcards")
-          .select("front, back")
-          .eq("user_id", user.id); // Use user.id from the prop
+          .from('Flashcards')
+          .select('front, back')
+          .eq('user_id', user.id); // Use user.id from the prop
 
         if (error) {
-          console.error("Error fetching flashcards:", error);
+          console.error('Error fetching flashcards:', error);
         } else {
           setFlashcards(data);
         }
