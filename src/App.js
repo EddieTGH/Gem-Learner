@@ -37,6 +37,10 @@ function App() {
             path="/dashboard" 
             element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />}
           />
+          <Route 
+            path="/chat-page"
+            element={<ChatBot />}
+          />
 {/* //         <NavigationBar />
 //         <Routes>
 //           <Route path="/chat-page" element={<ChatPage />} />
