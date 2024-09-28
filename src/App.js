@@ -38,11 +38,11 @@ function App() {
           />
           <Route 
             path="/chat-page"
-            element={<ChatBot />}
+            element={<ChatBot user={user} />}
           />
           <Route
             path="/flashcards-page"
-            element={<FlashcardsPage />}
+            element={<FlashcardsPage user={user} />}
           />
 {/* //         <NavigationBar />
 //         <Routes>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './chat-page.css';  // Import the CSS for styling
 import storeChat from '../../pages/database-example/db-store-chat';
+import storeFlashcard from '../../pages/database-example/db-store-flashcard';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
-function ChatBot() {
+function ChatBot({ user }) {
   const [inputValue, setInputValue] = useState('');
   const [promptResponses, setPromptResponses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -43,12 +44,17 @@ function ChatBot() {
   
       // Generate required variables for storing in Supabase
       const category = "General"; // You can modify this based on context or content type
-      const userId = "123"; // You would replace this with actual userId, e.g., from a login session
-      const chatId = "123"; // Use a unique chat session ID for each conversation
-      const isFlashcard = false; // Modify this flag as needed for flashcard-related queries
+      const userId = user?.id; // You would replace this with actual userId, e.g., from a login session
+      console.log(userId);
+      const isFlashcard = true; // Modify this flag as needed for flashcard-related queries
   
       // Call the function to store chat in Supabase
-      await storeChat(userQuery, text, category, userId, chatId, isFlashcard);
+      await storeChat(userQuery, text, category, userId, isFlashcard);
+
+      // Conditionally store flashcard when `isFlashcard` is true
+      if (isFlashcard) {
+        await storeFlashcard(userQuery, text, userId);
+      }
   
     } catch (error) {
       console.log(error);
