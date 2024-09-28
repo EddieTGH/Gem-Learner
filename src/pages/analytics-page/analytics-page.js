@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../components/supabaseClient'; // Ensure your Supabase client is correctly imported
+import { supabase } from '../../components/supabaseClient';
 import NavigationBar from '../../components/NavigationBar/NavigationBar'; // Assuming NavigationBar is already implemented
 import './analytics-page.css'; // Styling for your Analytics page
 
@@ -11,12 +11,14 @@ function AnalyticsPage() {
     const fetchCategories = async () => {
       const { data, error } = await supabase
         .from('Chats') // Adjust table name if different
-        .select('category');
+        .select('*');
 
       if (error) {
         console.error('Error fetching categories:', error);
         return;
       }
+
+      console.log('Data:', data);
 
       // Count occurrences of each category
       const categoryCounts = data.reduce((acc, item) => {
@@ -32,6 +34,10 @@ function AnalyticsPage() {
         })
       );
 
+      // Log the formatted categories to the console
+      console.log('Fetched Categories:', formattedCategories);
+
+      // Update the state with the categories
       setCategories(formattedCategories);
     };
 
