@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -6,8 +6,8 @@ import {
 	Navigate,
 
 } from 'react-router-dom';
-// import ChatPage from "./pages/chat-page/chat-page";
 import FlashcardsPage from './pages/flashcards-page/flashcards-page';
+
 // import AnalyticsPage from "./pages/analytics-page/analytics-page";
 // import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Auth from "./pages/supabase-login/supabase-login";
@@ -17,6 +17,7 @@ import { supabase } from "./components/supabaseClient";
 import "./App.css";
 import ChatBot from "./pages/chat-page/chat-page";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
 
 async function initializeChat() {
 	const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);

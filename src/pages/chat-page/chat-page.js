@@ -10,6 +10,7 @@ function ChatBot({ chat, user }) {
   const [inputValue, setInputValue] = useState('');
   const [promptResponses, setPromptResponses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [queryResponse, setQueryResponse] = useState({});
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -18,6 +19,34 @@ function ChatBot({ chat, user }) {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       getResponseForGivenPrompt();
+    }
+  };
+
+  // Create flashcard by querying again
+  const addFlashcard = async () => {
+    if (!queryResponse.query.trim() || !queryResponse.response.trim()) return;
+
+    try {
+      const userQuery =
+        'Can you make one flashcard out of this query and response pair? It should be less than two sentences without formatting. Query: ' +
+        queryResponse.query +
+        ' $$$ Response: ' +
+        queryResponse.response +
+        '. Put $$$ in your response between the flashcard front and back.';
+      setLoading(true);
+
+      const result = await chat.sendMessage(userQuery);
+      const generatedFlashcard = result.response.text();
+      setLoading(false);
+
+      const [front, back] = generatedFlashcard.split('$$$');
+      const userId = user?.id;
+      console.log('result', generatedFlashcard);
+      await storeFlashcard(front, back, userId);
+    } catch (error) {
+      console.log(error);
+      console.log('Generating flashcard went wrong');
+      setLoading(false);
     }
   };
 
@@ -40,6 +69,7 @@ function ChatBot({ chat, user }) {
         { text: userQuery, isUser: true },
         ...promptResponses,
       ]);
+      setQueryResponse({ query: userQuery, response: response });
 
       setLoading(false);
 
@@ -48,15 +78,10 @@ function ChatBot({ chat, user }) {
       console.log(category);
       const userId = user?.id; // You would replace this with actual userId, e.g., from a login session
       console.log(userId);
-      const isFlashcard = true; // Modify this flag as needed for flashcard-related queries
+      const isFlashcard = false; // Modify this flag as needed for flashcard-related queries
 
       // Call the function to store chat in Supabase
       await storeChat(userQuery, response, category, userId, isFlashcard);
-
-      // Conditionally store flashcard when `isFlashcard` is true
-      if (isFlashcard) {
-        await storeFlashcard(userQuery, response, userId);
-      }
     } catch (error) {
       console.log(error);
       console.log('Something Went Wrong');
@@ -104,7 +129,7 @@ function ChatBot({ chat, user }) {
           {promptResponses.map((response, index) => (
             <div
               key={index}
-              className={`response-text ${response.isUser ? 'user-query' : 'gemini-response'}`}
+              className={`response-text ${response.isUser ? 'user-query' : 'gemini-response'} ${index === 0 && !response.isUser ? 'fw-bold' : ''}`}
             >
               {response.isUser ? (
                 response.text
@@ -130,7 +155,9 @@ function ChatBot({ chat, user }) {
           >
             Send
           </button>
-          <button className="mx-2">Add Flashcard</button>
+          <button onClick={addFlashcard} className="mx-2">
+            Add Flashcard
+          </button>
         </div>
       </div>
     </div>
