@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../../components/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 
-function Auth( { setUser } ) {
+function Auth({ setUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
