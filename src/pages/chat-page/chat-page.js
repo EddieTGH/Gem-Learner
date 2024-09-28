@@ -21,11 +21,13 @@ function ChatBot({ user }) {
 
   const getResponseForGivenPrompt = async () => {
     if (!inputValue.trim()) return; // Prevent sending empty queries
-  
     try {
       const userQuery = inputValue; // Store user query
       setLoading(true);
-      setPromptResponses([{ text: userQuery, isUser: true }, ...promptResponses]);
+      setPromptResponses([
+        { text: userQuery, isUser: true },
+        ...promptResponses,
+      ]);
       setInputValue('');
   
       // Call the Gemini API
@@ -58,7 +60,7 @@ function ChatBot({ user }) {
   
     } catch (error) {
       console.log(error);
-      console.log("Something Went Wrong");
+      console.log('Something Went Wrong');
       setLoading(false);
     }
   };
@@ -77,7 +79,11 @@ function ChatBot({ user }) {
           )}
 
           {promptResponses.map((response, index) => (
-            <div key={index} className={`response-text ${response.isUser ? 'user-query' : 'gemini-response'} ${index === 0 && !response.isUser ? 'fw-bold' : ''}`}>
+            <div
+              key={index}
+              className={`response-text ${response.isUser ? 'user-query' : 'gemini-response'}`}
+            >
+              {console.log('here', response)}
               {response.text}
             </div>
           ))}
@@ -92,7 +98,13 @@ function ChatBot({ user }) {
             placeholder="Ask Me Something You Want"
             className="form-control"
           />
-          <button onClick={getResponseForGivenPrompt} className="btn btn-primary">Send</button>
+          <button
+            onClick={getResponseForGivenPrompt}
+            className="btn btn-primary"
+          >
+            Send
+          </button>
+          <button className="mx-2">Add Flashcard</button>
         </div>
       </div>
     </div>

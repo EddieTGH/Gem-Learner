@@ -78,3 +78,112 @@
     background-color: #0056b3;
   }
   
+=======
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1000px;
+  min-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+/* Chat window containing the responses */
+.chat-window {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column-reverse; /* Ensures latest message appears at the top */
+  overflow-y: auto;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Response text styling */
+.response-text {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+  color: #333;
+  display: inline-block;
+}
+
+/* User query styling */
+.user-query {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end; /* Align user query to the right */
+  text-align: right;
+}
+
+/* Gemini response styling */
+.gemini-response {
+  background-color: #eef2f7;
+  align-self: flex-start; /* Align gemini response to the left */
+  text-align: left;
+}
+
+/* Latest response text is bold */
+.fw-bold {
+  font-weight: bold;
+  background-color: #d0e7ff; /* Different background color for the latest response */
+}
+
+/* Loading spinner positioning */
+.loading {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Input area for the prompt text and button */
+.input-area {
+  display: flex;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-top: 1px solid #ddd;
+}
+
+/* Input styling */
+.input-area input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* Send button styling */
+.input-area button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background-color: #0056b3;
+}
+
+/* Justify user query to the right */
+.user-query {
+  background-color: #007bff; /* Blue background */
+  color: white;
+  align-self: flex-end; /* Align the user's query to the right */
+  text-align: right; /* Text inside the bubble is also right-aligned */
+}
+
+/* Justify gemini response to the left */
+.gemini-response {
+  background-color: #eef2f7; /* Light gray background */
+  color: black;
+  align-self: flex-start; /* Align the Gemini response to the left */
+  text-align: left; /* Text inside the bubble is left-aligned */
+}

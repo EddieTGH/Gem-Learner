@@ -1,58 +1,38 @@
-import React, { useState } from "react";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import "./flashcards-page.css";
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../components/supabaseClient';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import './flashcards-page.css';
 
-const dummyFlashcards = [
-  {
-    question: "What is React?",
-    answer: "A JavaScript library for building user interfaces.",
-  },
-  {
-    question: "What is JSX?",
-    answer:
-      "A syntax extension for JavaScript that looks similar to XML or HTML.",
-  },
-  {
-    question: "What is a component?",
-    answer: "A reusable piece of UI in React.",
-  },
-  {
-    question: "What is a hook?",
-    answer:
-      "A special function that lets you use state and other React features.",
-  },
-  {
-    question: "What is the useState hook?",
-    answer: "A hook that allows you to add state to a functional component.",
-  },
-  {
-    question: "What is the useEffect hook?",
-    answer: "A hook that lets you perform side effects in function components.",
-  },
-  {
-    question: "What is Virtual DOM?",
-    answer: "A representation of the real DOM that React uses for performance.",
-  },
-  {
-    question: "What is props?",
-    answer:
-      "Arguments passed into React components, used to customize the component.",
-  },
-  {
-    question: "What is state?",
-    answer:
-      "A built-in object used to store data that may change over the lifecycle of the component.",
-  },
-  {
-    question: "What is React Router?",
-    answer: "A library for managing navigation in React applications.",
-  },
-];
-
-function FlashcardsPage() {
+function FlashcardsPage({ user }) {
+  // Accept user as a prop
+  const [flashcards, setFlashcards] = useState([]);
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const totalFlashcards = dummyFlashcards.length;
+  const [loading, setLoading] = useState(true);
+
+  // Fetch flashcards on component mount
+  useEffect(() => {
+    if (user && user.id) {
+      // Ensure user is passed as a prop and has an id
+      const fetchFlashcards = async () => {
+        const { data, error } = await supabase
+          .from('Flashcards')
+          .select('front, back')
+          .eq('user_id', user.id); // Use user.id from the prop
+
+        if (error) {
+          console.error('Error fetching flashcards:', error);
+        } else {
+          setFlashcards(data);
+        }
+        setLoading(false); // Stop loading once data is fetched
+      };
+
+      fetchFlashcards(); // Fetch flashcards for this user
+    }
+  }, [user]);
+
+  const totalFlashcards = flashcards.length;
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -72,7 +52,31 @@ function FlashcardsPage() {
     );
   };
 
-  const currentFlashcard = dummyFlashcards[currentFlashcardIndex];
+  if (loading) {
+    return (
+      <div className="flashcards-container">
+        <NavigationBar />
+        <div className="flashcard-content">
+          <h1>Flashcards</h1>
+          <p>Loading flashcards...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (totalFlashcards === 0) {
+    return (
+      <div className="flashcards-container">
+        <NavigationBar />
+        <div className="flashcard-content">
+          <h1>Flashcards</h1>
+          <p>No flashcards available.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentFlashcard = flashcards[currentFlashcardIndex];
 
   return (
     <div className="flashcards-container">
@@ -80,14 +84,14 @@ function FlashcardsPage() {
       <div className="flashcard-content">
         <h1>Flashcards</h1>
         <div className="flashcard" onClick={handleFlip}>
-          {isFlipped ? currentFlashcard.answer : currentFlashcard.question}
+          {isFlipped ? currentFlashcard.back : currentFlashcard.front}
         </div>
         <div className="navigation-buttons">
-          <button onClick={handlePrevious}>← Previous</button>
+          <button onClick={handlePrevious}>&larr; Previous</button>
           <span>
             Flashcard {currentFlashcardIndex + 1} of {totalFlashcards}
           </span>
-          <button onClick={handleNext}>Next →</button>
+          <button onClick={handleNext}>Next &rarr;</button>
         </div>
       </div>
     </div>
