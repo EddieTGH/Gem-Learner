@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import './chat-page.css'; // Import the CSS for styling
 import storeChat from '../../pages/database-example/db-store-chat';
@@ -73,7 +74,8 @@ function ChatBot({ chat, user }) {
       setLoading(false);
 
       // Generate required variables for storing in Supabase
-      const category = 'General'; // You can modify this based on context or content type
+      const category = await getCategory(userQuery); // You can modify this based on context or content type
+      console.log(category);
       const userId = user?.id; // You would replace this with actual userId, e.g., from a login session
       console.log(userId);
       const isFlashcard = false; // Modify this flag as needed for flashcard-related queries
@@ -84,6 +86,31 @@ function ChatBot({ chat, user }) {
       console.log(error);
       console.log('Something Went Wrong');
       setLoading(false);
+    }
+  };
+
+  const getCategory = async (userQuery) => {
+    try {
+      // Call the Gemini API
+      const apiKeyGemini = process.env.REACT_APP_GEMINI_API_KEY;
+      const { GoogleGenerativeAI } = require('@google/generative-ai');
+      const genAI = new GoogleGenerativeAI(apiKeyGemini);
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+      const userQuery2 =
+        'Here is my user query: ' +
+        userQuery +
+        '. If academically related, please provide me with the subject in one/two words. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
+      const result = await model.generateContent(userQuery2);
+      const response = result.response;
+      const category = response.text();
+      //console.log(category);
+      return category;
+    } catch (error) {
+      console.log(error);
+      console.log('Something Went Wrong');
+      setLoading(false);
+      return null;
     }
   };
 
@@ -104,8 +131,11 @@ function ChatBot({ chat, user }) {
               key={index}
               className={`response-text ${response.isUser ? 'user-query' : 'gemini-response'} ${index === 0 && !response.isUser ? 'fw-bold' : ''}`}
             >
-              {console.log('here', response, index)}
-              {response.text}
+              {response.isUser ? (
+                response.text
+              ) : (
+                <ReactMarkdown>{response.text}</ReactMarkdown>
+              )}
             </div>
           ))}
         </div>
