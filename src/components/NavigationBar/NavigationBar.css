@@ -1,0 +1,45 @@
+/* NavigationBar.css */
+
+/* Container styles */
+.navbar {
+    width: 25%;               /* Take up 25% of the width */
+    background-color: #333;    /* Grey background */
+    height: 100vh;             /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 1rem 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);  /* Subtle shadow for depth */
+  }
+  
+  /* Remove bullets and center the list */
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  /* Individual navigation item */
+  .nav-item {
+    width: 100%;
+  }
+  
+  /* Link styles */
+  .nav-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    transition: background-color 0.3s ease, font-weight 0.3s ease;
+  }
+  
+  /* Hover effect */
+  .nav-link:hover {
+    font-weight: bold;
+    background-color: #555;   /* Lighter grey on hover */
+  }
+  
