@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Auth from './pages/supabase-login/supabase-login';
+import Dashboard from './pages/dashboard-page/dashboard';
+import { useState, useEffect } from 'react';
+import { supabase } from './components/supabaseClient';
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    checkSession();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          {/* If user is logged in, redirect to /dashboard, otherwise show Auth component */}
+          <Route 
+            path="/" 
+            element={user ? <Navigate to="/dashboard" /> : <Auth setUser={setUser}/>} 
+          />
+          {/* If user is logged in, show Dashboard, otherwise redirect to / */}
+          <Route 
+            path="/dashboard" 
+            element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/" />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
