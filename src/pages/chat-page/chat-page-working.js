@@ -1,71 +1,78 @@
-// chat-bot.js
 import React, { useState } from 'react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import './chat-page.css';  // Import the CSS for styling
-import { GoogleGenerativeAI } from '@google/generative-ai';  // Import the Google Gemini API package
 
 function ChatBot() {
-  const [messages, setMessages] = useState([]);  // Stores the conversation
-  const [input, setInput] = useState('');        // Stores the user's input
-  const [loading, setLoading] = useState(false); // Loading state for API requests
+  const [inputValue, setInputValue] = useState('');
+  const [promptResponses, setpromptResponses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const genAI = new GoogleGenerativeAI(
+    "API KEY"
+// add your api key here
+  );
 
-  const apiKey = process.env.REACT_APP_GEMINI_API_KEY;  // Make sure your API key is in .env file
-  const genAI = new GoogleGenerativeAI(apiKey);  // Initialize the Gemini API
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const userMessage = { sender: 'user', text: input };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);  // Add user message to chat
-    setInput('');  // Clear input field
-    setLoading(true);  // Set loading state
-
+  const getResponseForGivenPrompt = async () => {
     try {
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });  // Initialize the model
-      const result = await model.generateContent({ prompt: { text: input } });  // Make API call with user input
-      const botMessage = { sender: 'bot', text: result.response.text };  // Extract the response text from the API
-      setMessages((prevMessages) => [...prevMessages, botMessage]);  // Add bot response to chat
-    } catch (error) {
-      console.error('Error fetching Gemini response:', error);
-      setMessages((prevMessages) => [...prevMessages, { sender: 'bot', text: 'Sorry, something went wrong.' }]);
-    } finally {
-      setLoading(false);  // Reset loading state
+      setLoading(true)
+      const apiKey = process.env.REACT_APP_GEMINI_API_KEY;  // Ensure you're using the environment variable
+      const { GoogleGenerativeAI } = require("@google/generative-ai");
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent(inputValue);
+      setInputValue('')
+      const response = result.response;
+      const text = response.text();
+      console.log(text)
+      setpromptResponses([...promptResponses,text]);
+  
+      setLoading(false)
     }
-  };
-
-  // Handle Enter key for message submission
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
+    catch (error) {
+      console.log(error)
+      console.log("Something Went Wrong");
+      setLoading(false)
     }
-  };
+  }
+    ;
 
   return (
-    <div className="chat-bot-container">
-      <div className="chat-bot-header">Gemini Chatbot</div>
-
-      <div className="chat-bot-box">
-        {messages.map((msg, index) => (
-          <div key={index} className={`chat-bot-message ${msg.sender}`}>
-            {msg.text}
-          </div>
-        ))}
-        {loading && <div className="chat-bot-loading">Gemini is thinking...</div>}
-      </div>
-
-      <div className="chat-bot-input-container">
+    <div className="container">
+    <div className="row">
+      <div className="col">
         <input
           type="text"
-          placeholder="Type a message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Ask Me Something You Want"
+          className="form-control"
         />
-        <button onClick={sendMessage} disabled={loading}>
-          Send
-        </button>
+      </div>
+      <div className="col-auto">
+        <button onClick={getResponseForGivenPrompt} className="btn btn-primary">Send</button>
       </div>
     </div>
+    {loading ? (
+      <div className="text-center mt-3">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+       // This message is shown while your answer to your prompt is being generated
+        </div>
+      </div>
+    ) : (
+      promptResponses.map((promptResponse, index) => (
+        <div key={index} >
+          <div className={`response-text ${index === promptResponses.length - 1 ? 'fw-bold' : ''}`}>{promptResponse}</div>
+     //the latest response shown in bold letters
+        </div>
+      ))
+    )}
+  </div>
+  
   );
-}
 
+}
 export default ChatBot;
