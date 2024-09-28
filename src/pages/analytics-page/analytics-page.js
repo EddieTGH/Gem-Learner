@@ -5,40 +5,38 @@ import './analytics-page.css'; // Styling for your Analytics page
 
 function AnalyticsPage() {
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
   // Fetch unique categories and their counts from Supabase
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data, error } = await supabase
-        .from('Chats') // Adjust table name if different
-        .select('*');
+      try {
+        // Call the SQL function via RPC to fetch category counts
+        const { data, error } = await supabase.rpc('get_category_counts');
 
-      if (error) {
-        console.error('Error fetching categories:', error);
-        return;
+        if (error) {
+          console.error('Error fetching categories:', error);
+          setError(error.message);
+          return;
+        }
+
+        console.log('Data:', data);
+
+        // Format data for rendering
+        const formattedCategories = data.map((item) => ({
+          category: item.category,
+          count: item.count,
+        }));
+
+        // Log the formatted categories to the console
+        console.log('Fetched Categories:', formattedCategories);
+
+        // Update the state with the categories
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.error('Unexpected error fetching categories:', error);
+        setError(error.message);
       }
-
-      console.log('Data:', data);
-
-      // Count occurrences of each category
-      const categoryCounts = data.reduce((acc, item) => {
-        acc[item.category] = acc[item.category] ? acc[item.category] + 1 : 1;
-        return acc;
-      }, {});
-
-      // Convert object to array of categories for easy rendering
-      const formattedCategories = Object.entries(categoryCounts).map(
-        ([category, count]) => ({
-          category,
-          count,
-        })
-      );
-
-      // Log the formatted categories to the console
-      console.log('Fetched Categories:', formattedCategories);
-
-      // Update the state with the categories
-      setCategories(formattedCategories);
     };
 
     fetchCategories();
@@ -50,7 +48,9 @@ function AnalyticsPage() {
       <div className="analytics-container">
         <h1>Analytics Page</h1>
         <div className="analytics-content">
-          {categories.length > 0 ? (
+          {error ? (
+            <p>Error: {error}</p>
+          ) : categories.length > 0 ? (
             categories.map((item) => (
               <div key={item.category} className="category-card">
                 <h2>{item.category}</h2>
