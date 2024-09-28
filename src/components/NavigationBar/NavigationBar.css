@@ -4,7 +4,7 @@
 .navbar {
   width: 25%; /* Take up 25% of the width */
   background-color: #333; /* Grey background */
-  height: calc(100vh - 2rem); /* Full height minus padding */
+  height: 100vh; /* Full height minus padding */
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Space out items */

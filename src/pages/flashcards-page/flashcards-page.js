@@ -9,7 +9,6 @@ function FlashcardsPage({ user }) {
   const [flashcards, setFlashcards] = useState([]);
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   // Fetch flashcards on component mount
   useEffect(() => {
@@ -25,12 +24,9 @@ function FlashcardsPage({ user }) {
         } else {
           setFlashcards(data);
         }
-        setLoading(false);
       };
 
       fetchFlashcards();
-    } else {
-      setLoading(false);
     }
   }, [user]);
 
@@ -62,24 +58,6 @@ function FlashcardsPage({ user }) {
       prevIndex === 0 ? totalFlashcards - 1 : prevIndex - 1
     );
   };
-
-  if (loading) {
-    return (
-      <div className="flashcards-container">
-        <NavigationBar />
-        <div className="main-content">
-          <div className="greeting-container">
-            <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
-            <p className="greeting-subtext">How can I help you today?</p>
-          </div>
-          <div className="flashcard-content">
-            <h1>Flashcards</h1>
-            <p>Loading flashcards...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (totalFlashcards === 0) {
     return (
