@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./NavigationBar.css"; // Import the CSS file
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './NavigationBar.css'; // Import the CSS file
 
 function NavigationBar() {
   return (
@@ -22,6 +22,8 @@ function NavigationBar() {
           </Link>
         </li>
       </ul>
+      <div className="spacer"></div>
+      <button className="sign-out-btn">Sign Out</button>
     </nav>
   );
 }

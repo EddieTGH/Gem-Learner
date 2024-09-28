@@ -1,84 +1,5 @@
 /* Main container holding the chat window and input area */
 .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 1000px;
-    min-width: 800px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    overflow: hidden;
-  }
-  
-  /* Chat window containing the responses */
-  .chat-window {
-    flex-grow: 1;
-    padding: 10px;
-    display: flex;
-    flex-direction: column-reverse; /* Ensures latest message appears at the top */
-    overflow-y: auto;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Response text styling */
-  .response-text {
-    background-color: #eef2f7;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    max-width: 80%;
-    word-wrap: break-word;
-    color: #333;
-  }
-  
-  /* Latest response text is bold */
-  .fw-bold {
-    font-weight: bold;
-    background-color: #d0e7ff; /* Different background color for the latest response */
-  }
-  
-  /* Loading spinner positioning */
-  .loading {
-    padding: 10px;
-    text-align: center;
-  }
-  
-  /* Input area for the prompt text and button */
-  .input-area {
-    display: flex;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-top: 1px solid #ddd;
-  }
-  
-  /* Input styling */
-  .input-area input {
-    flex-grow: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  
-  /* Send button styling */
-  .input-area button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .input-area button:hover {
-    background-color: #0056b3;
-  }
-  
-=======
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -89,6 +10,72 @@
   border-radius: 8px;
   border: 1px solid #ddd;
   overflow: hidden;
+}
+
+/* Chat window containing the responses */
+.chat-window {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column-reverse; /* Ensures latest message appears at the top */
+  overflow-y: auto;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Response text styling */
+.response-text {
+  background-color: #eef2f7;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+  color: #333;
+}
+
+/* Latest response text is bold */
+.fw-bold {
+  font-weight: bold;
+  background-color: #d0e7ff; /* Different background color for the latest response */
+}
+
+/* Loading spinner positioning */
+.loading {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Input area for the prompt text and button */
+.input-area {
+  display: flex;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-top: 1px solid #ddd;
+}
+
+/* Input styling */
+.input-area input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* Send button styling */
+.input-area button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background-color: #0056b3;
 }
 
 /* Chat window containing the responses */

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import NavigationBar from '../../components/NavigationBar/NavigationBar'; // Corrected path
+import './flashcards-page.css'; // Corrected path
 import { supabase } from '../../components/supabaseClient';
-import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import './flashcards-page.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function FlashcardsPage({ user }) {
-  // Accept user as a prop
   const [flashcards, setFlashcards] = useState([]);
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -13,24 +14,34 @@ function FlashcardsPage({ user }) {
   // Fetch flashcards on component mount
   useEffect(() => {
     if (user && user.id) {
-      // Ensure user is passed as a prop and has an id
       const fetchFlashcards = async () => {
         const { data, error } = await supabase
           .from('Flashcards')
           .select('front, back')
-          .eq('user_id', user.id); // Use user.id from the prop
+          .eq('user_id', user.id);
 
         if (error) {
           console.error('Error fetching flashcards:', error);
         } else {
           setFlashcards(data);
         }
-        setLoading(false); // Stop loading once data is fetched
+        setLoading(false);
       };
 
-      fetchFlashcards(); // Fetch flashcards for this user
+      fetchFlashcards();
+    } else {
+      setLoading(false);
     }
   }, [user]);
+
+  // Greeting text animation
+  useEffect(() => {
+    const greetingText = document.querySelector('.greeting-text');
+    if (greetingText) {
+      greetingText.style.opacity = '1';
+      greetingText.style.transform = 'translateY(0)';
+    }
+  }, []);
 
   const totalFlashcards = flashcards.length;
 
@@ -56,9 +67,15 @@ function FlashcardsPage({ user }) {
     return (
       <div className="flashcards-container">
         <NavigationBar />
-        <div className="flashcard-content">
-          <h1>Flashcards</h1>
-          <p>Loading flashcards...</p>
+        <div className="main-content">
+          <div className="greeting-container">
+            <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
+            <p className="greeting-subtext">How can I help you today?</p>
+          </div>
+          <div className="flashcard-content">
+            <h1>Flashcards</h1>
+            <p>Loading flashcards...</p>
+          </div>
         </div>
       </div>
     );
@@ -68,9 +85,15 @@ function FlashcardsPage({ user }) {
     return (
       <div className="flashcards-container">
         <NavigationBar />
-        <div className="flashcard-content">
-          <h1>Flashcards</h1>
-          <p>No flashcards available.</p>
+        <div className="main-content">
+          <div className="greeting-container">
+            <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
+            <p className="greeting-subtext">How can I help you today?</p>
+          </div>
+          <div className="flashcard-content">
+            <h1>Flashcards</h1>
+            <p>No flashcards available.</p>
+          </div>
         </div>
       </div>
     );
@@ -81,17 +104,41 @@ function FlashcardsPage({ user }) {
   return (
     <div className="flashcards-container">
       <NavigationBar />
-      <div className="flashcard-content">
-        <h1>Flashcards</h1>
-        <div className="flashcard" onClick={handleFlip}>
-          {isFlipped ? currentFlashcard.back : currentFlashcard.front}
+      <div className="main-content">
+        <div className="greeting-container">
+          <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
+          <p className="greeting-subtext">How can I help you today?</p>
         </div>
-        <div className="navigation-buttons">
-          <button onClick={handlePrevious}>&larr; Previous</button>
-          <span>
-            Flashcard {currentFlashcardIndex + 1} of {totalFlashcards}
-          </span>
-          <button onClick={handleNext}>Next &rarr;</button>
+        <div className="flashcard-content">
+          <h1>Flashcards</h1>
+          <div
+            className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}
+            onClick={handleFlip}
+          >
+            <div className="flashcard-inner">
+              <div className="flashcard-front">{currentFlashcard.front}</div>
+              <div className="flashcard-back">{currentFlashcard.back}</div>
+            </div>
+          </div>
+          <div className="navigation-buttons">
+            <button className="navigation-button" onClick={handlePrevious}>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="navigation-button-icon"
+              />
+              Previous
+            </button>
+            <span>
+              {currentFlashcardIndex + 1} of {totalFlashcards}
+            </span>
+            <button className="navigation-button" onClick={handleNext}>
+              Next
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className="navigation-button-icon"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
