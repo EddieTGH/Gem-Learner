@@ -4,17 +4,39 @@ import {
   Routes,
   Route,
   Navigate,
+
 } from 'react-router-dom';
 import FlashcardsPage from './pages/flashcards-page/flashcards-page';
-import Auth from './pages/supabase-login/supabase-login';
-import Dashboard from './pages/dashboard-page/dashboard';
-import { supabase } from './components/supabaseClient';
-import ChatBot from './pages/chat-page/chat-page';
+
+// import AnalyticsPage from "./pages/analytics-page/analytics-page";
+// import NavigationBar from "./components/NavigationBar/NavigationBar";
+import Auth from "./pages/supabase-login/supabase-login";
+import Dashboard from "./pages/dashboard-page/dashboard";
+import { useState, useEffect } from "react";
+import { supabase } from "./components/supabaseClient";
+import "./App.css";
+import ChatBot from "./pages/chat-page/chat-page";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
-import './App.css';
+
+async function initializeChat() {
+  const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const chat = model.startChat({
+    history: [
+      { role: "user", parts: [{ text: "Hello" }] },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+  });
+  return chat;
+}
 
 function App() {
   const [user, setUser] = useState(null);
+  const [chat, setChat] = useState(null);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -25,6 +47,14 @@ function App() {
     };
 
     checkSession();
+  }, []);
+
+  useEffect(() => {
+    async function init() {
+      const chatObj = await initializeChat();
+      setChat(chatObj);
+    }
+    init();
   }, []);
 
   return (
@@ -48,9 +78,8 @@ function App() {
             )
           }
         />
-        {/* Route for ChatBot Page */}
-        <Route path="/chat-page" element={<ChatBot user={user} />} />
-        {/* Route for Flashcards Page */}
+
+        <Route path="/chat-page" element={<ChatBot user={user} chat={chat} />} />
         <Route
           path="/flashcards-page"
           element={<FlashcardsPage user={user} />}
