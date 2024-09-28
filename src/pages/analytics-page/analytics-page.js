@@ -11,7 +11,7 @@ function AnalyticsPage() {
     const fetchCategories = async () => {
       const { data, error } = await supabase
         .from('Chats') // Adjust table name if different
-        .select('*');
+        .select();
 
       if (error) {
         console.error('Error fetching categories:', error);
