@@ -32,7 +32,7 @@ function ChatBot({ chat, user }) {
         queryResponse.query +
         ' $$$ Response: ' +
         queryResponse.response +
-        '. Put $$$ in your response between the flashcard front and back.';
+        '. Put $$$ in your response between the flashcard front (a question) and back (an answer).';
       setLoading(true);
 
       const result = await chat.sendMessage(userQuery);
@@ -115,14 +115,14 @@ function ChatBot({ chat, user }) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-gradient-to-br from-[#1e1e1e] to-[#333333]">
       <NavigationBar />
       <div className="chat-container">
         <div className="chat-window">
           {loading && (
             <div className="loading text-center">
               <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
+                <span className="visually-hidden text-white">Loading...</span>
               </div>
             </div>
           )}
@@ -147,7 +147,7 @@ function ChatBot({ chat, user }) {
             onChange={handleInputChange}
             onKeyPress={handleKeyPress} // Trigger response on "Enter"
             placeholder="Ask Me Something You Want"
-            className="form-control"
+            className="form-control bg-inherit text-white"
           />
           <button
             onClick={getResponseForGivenPrompt}
