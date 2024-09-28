@@ -9,7 +9,6 @@ function App() {
   return (
     <Router>
       <div>
-        <NavigationBar />
         <Routes>
           <Route path="/chat-page" element={<ChatPage />} />
           <Route path="/flashcards-page" element={<FlashcardsPage />} />
