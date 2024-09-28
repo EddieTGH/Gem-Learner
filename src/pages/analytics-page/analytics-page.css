@@ -1,7 +1,10 @@
 /* General layout container */
+/* General layout container */
 .page-container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh; /* Ensure the container takes the full viewport height */
+  width: 100%; /* Ensure it takes the full width */
+  background-color: #121212; /* Example background color */
 }
 
 /* Styling for the NavigationBar */
@@ -15,12 +18,12 @@
 
 /* Styling for the main analytics container */
 .analytics-container {
-  flex-grow: 1;
+  flex-grow: 1; /* Ensure this element takes up all available space */
   padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f4f4;
+  background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
 }
 
 /* Styling for the analytics cards */
@@ -33,7 +36,6 @@
 
 .category-card {
   background-color: #ffffff;
-  border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 20px;
   width: 200px;
@@ -48,11 +50,11 @@
 .category-card h2 {
   margin: 0;
   font-size: 1.5em;
-  color: #333;
+  color: #000000;
 }
 
 .category-card p {
   margin: 10px 0 0;
   font-size: 1.2em;
-  color: #555;
+  color: #000000;
 }
