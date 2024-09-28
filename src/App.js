@@ -8,6 +8,8 @@ import Auth from './pages/supabase-login/supabase-login';
 import Dashboard from './pages/dashboard-page/dashboard';
 import { useState, useEffect } from 'react';
 import { supabase } from './components/supabaseClient';
+import './App.css';
+import ChatBot from './pages/chat-page/chat-page';
 
 function App() {
   const [user, setUser] = useState(null);
