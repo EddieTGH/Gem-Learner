@@ -51,7 +51,7 @@ function App() {
             )
           }
         />
-        <Route path="/chat-page" element={<ChatBot />} />
+        <Route path="/chat-page" element={<ChatBot user={user} />} />
         <Route
           path="/flashcards-page"
           element={<FlashcardsPage user={user} />}
