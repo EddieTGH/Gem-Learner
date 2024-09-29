@@ -18,7 +18,7 @@ function NavigationBar() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/flashcards-page" className="nav-link">
+          <Link to="/flashcard-categories" className="nav-link">
             Flashcards
           </Link>
         </li>
