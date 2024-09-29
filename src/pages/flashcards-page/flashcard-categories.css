@@ -1,0 +1,82 @@
+/* General layout container */
+/* General layout container */
+.page-container {
+  display: flex;
+  height: 100vh; /* Ensure the container takes the full viewport height */
+  width: 100%; /* Ensure it takes the full width */
+  background-color: #121212; /* Example background color */
+}
+
+/* Styling for the NavigationBar */
+.NavigationBar {
+  width: 250px;
+  background-color: #343a40; /* Dark background for the navbar */
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the main analytics container */
+.analytics-container {
+  flex-grow: 1; /* Ensure this element takes up all available space */
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
+}
+
+/* Styling for the analytics cards */
+.analytics-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.category-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+}
+
+.category-card h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #000000;
+}
+
+.category-card p {
+  margin: 10px 0 0;
+  font-size: 1.2em;
+  color: #000000;
+}
+
+.greeting-text {
+  font-size: 2.5rem;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(90deg, #ff758c, #6a11cb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  opacity: 1; /* Text is fully transparent */
+  transform: translateY(0px); /* Text is moved up by 20px */
+  transition:
+    opacity 0.6s ease-in-out,
+    transform 0.6s ease-in-out;
+}
+
+.greeting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
