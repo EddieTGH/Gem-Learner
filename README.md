@@ -3,7 +3,7 @@
 Edmond Niu - edmond.niu@gmail.com
 Krishna Katakota - krk131@pitt.edu
 Rahul Anantuni - anantuni.rahul@gmail.com
-Eric wang - eric_wang@college.harvard.edu
+Eric Wang - eric_wang@college.harvard.edu
 
 ## What it does
 
