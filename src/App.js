@@ -15,6 +15,7 @@ import "./App.css";
 import ChatBot from "./pages/chat-page/chat-page";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
+import RagPage from './pages/RAG-page/rag-page';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
 import FlashcardCategories from './pages/flashcards-page/flashcard-categories';
@@ -98,6 +99,7 @@ function App() {
 						user ? <FlashcardCategories user={user} /> : <Navigate to="/" />
 					}
 				/>
+        <Route path="/rag-page" element={<RagPage user={user} />} />
 			</Routes>
 		</Router>
 	);
