@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import './chat-page.css'; // Import the CSS for styling
 import storeChat from '../../pages/database-example/db-store-chat';
 import storeFlashcard from '../../pages/database-example/db-store-flashcard';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { fetchFlashcardSets } from '../../components/utils'; // Adjust path as necessary
 
 function ChatBot({ chat, user }) {
   const [inputValue, setInputValue] = useState('');
@@ -13,6 +14,18 @@ function ChatBot({ chat, user }) {
   const [isEditingFlashcard, setIsEditingFlashcard] = useState(false);
   const [flashcardFront, setFlashcardFront] = useState('');
   const [flashcardBack, setFlashcardBack] = useState('');
+  const [flashcardSets, setFlashcardSets] = useState([]);
+  const [selectedSet, setSelectedSet] = useState(''); // Track the selected set
+
+  // Fetch flashcard sets when component mounts
+  useEffect(() => {
+    const loadFlashcardSets = async () => {
+      const sets = await fetchFlashcardSets(user); // Fetch sets from Supabase
+      setFlashcardSets(sets); // Store the sets in state
+    };
+
+    loadFlashcardSets(); // Call the function
+  }, [user]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -60,8 +73,14 @@ function ChatBot({ chat, user }) {
   // Added
   const submitFlashcard = async () => {
     try {
+      console.log('SELECTED', selectedSet);
       const userId = user?.id;
-      await storeFlashcard(flashcardFront.trim(), flashcardBack.trim(), userId);
+      await storeFlashcard(
+        flashcardFront.trim(),
+        flashcardBack.trim(),
+        userId,
+        selectedSet
+      );
       setIsEditingFlashcard(false); // Close the editing panel
       setFlashcardFront('');
       setFlashcardBack('');
@@ -171,6 +190,25 @@ function ChatBot({ chat, user }) {
               placeholder="Back of Flashcard"
               className="edit-flashcard-input"
             />
+
+            {/* Dropdown for selecting a flashcard set */}
+            {console.log('HERE@##@', flashcardSets)}
+            <div className="flashcard-set-selection">
+              <label>Select a Set (or leave as 'No set')</label>
+              <select
+                value={selectedSet}
+                onChange={(e) => setSelectedSet(e.target.value)}
+                className="form-control bg-gray-800 text-white p-2 rounded"
+              >
+                <option value="">No set</option>
+                {flashcardSets.map((set) => (
+                  <option key={set.set_id} value={set.set_id}>
+                    {set.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="flashcard-actions">
               <button className="btn btn-primary" onClick={submitFlashcard}>
                 Save Flashcard
