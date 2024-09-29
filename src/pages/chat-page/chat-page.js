@@ -163,7 +163,7 @@ function ChatBot({ chat, user, convo_id }) {
       const userQuery2 =
         'Here is my user query: ' +
         userQuery +
-        '. If academically related, please provide me with the subject in one/two words. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
+        '. If academically related, please provide me with the subject in one word only. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
       const result = await model.generateContent(userQuery2);
       const response = result.response;
       const category = response.text();
@@ -181,14 +181,6 @@ function ChatBot({ chat, user, convo_id }) {
     <div className="flex bg-gradient-to-br from-[#1e1e1e] to-[#333333]">
       <NavigationBar />
       <div className="chat-container">
-        {/* Conditionally render the greeting based on prompt responses */}
-
-        {promptResponses.length === 0 && (
-          <div className="greeting-container">
-            <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
-            <p className="greeting-subtext">How can I help you today?</p>
-          </div>
-        )}
         <div className="chat-window">
           {loading && (
             <div className="loading text-center">
@@ -265,7 +257,7 @@ function ChatBot({ chat, user, convo_id }) {
             value={inputValue}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
-            placeholder="Ask Me Something You Want"
+            placeholder="Enter a prompt here"
             className="form-control bg-inherit text-white"
           />
           <button

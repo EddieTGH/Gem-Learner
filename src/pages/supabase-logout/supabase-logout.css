@@ -1,12 +1,23 @@
+/* supabase-logout.css */
+
+.logout-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  background-color: #282828; /* Move background color here */
+}
+
 .logout-box {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
   max-width: 350px;
+  width: 100%; /* Ensure the box doesn't exceed max-width */
   display: flex;
   flex-direction: column;
+  /* Remove the 'margin: 0 auto;' */
 }
 
 .logout-box h2 {
@@ -37,9 +48,4 @@
   text-align: center;
   margin-top: 10px;
   margin-bottom: 5px;
-}
-
-body {
-  background-color: #282828;
-  position: relative;
 }

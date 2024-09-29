@@ -164,7 +164,7 @@ function FlashcardCategories({ user }) {
               </div>
             ))
           ) : (
-            <p>No sets available</p>
+            <p></p>
           )}
 
           {/* Special "All" flashcards card */}
@@ -173,8 +173,8 @@ function FlashcardCategories({ user }) {
             className="category-card"
             onClick={() => handleSetClick(allFlashcards, 'All Flashcards')}
           >
-            <h2>All Flashcards</h2>
-            <p>Count: {allFlashcards.length}</p>
+            <h2 className="text-center">All Flashcards</h2>
+            <p className="text-center">Count: {allFlashcards.length}</p>
           </div>
         </div>
 

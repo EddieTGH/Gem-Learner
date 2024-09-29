@@ -33,28 +33,23 @@
 }
 
 .category-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  width: 200px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+  /* Existing styles */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.category-card h2,
+.category-card p {
+  text-align: center; /* Center text inside h2 and p */
+}
+
+.delete-button {
+  margin-top: 10px; /* Space above the button */
+  /* Other button styles */
+}
 .category-card:hover {
   transform: scale(1.05);
-}
-
-.category-card h2 {
-  margin: 0;
-  font-size: 1.5em;
-  color: #000000;
-}
-
-.category-card p {
-  margin: 10px 0 0;
-  font-size: 1.2em;
-  color: #000000;
 }
 
 .greeting-text {
