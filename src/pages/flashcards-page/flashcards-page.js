@@ -48,7 +48,11 @@ function FlashcardsPage({ user }) {
       if (event.key === 'ArrowLeft') {
         handlePrevious();
       }
-      if (event.key === ' ') {
+      if (
+        event.key === ' ' ||
+        event.key === 'ArrowUp' ||
+        event.key === 'ArrowDown'
+      ) {
         handleFlip();
       }
     };
