@@ -273,6 +273,7 @@ function ChatBot({ chat, user, convo_id }) {
 			</div>
 		</div>
 	);
+
 }
 
 export default ChatBot;
