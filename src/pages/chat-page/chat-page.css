@@ -7,12 +7,12 @@
   max-width: 1000px;
   min-width: 800px;
   margin: 0 auto;
+  background-color: #494949;
   background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
   border-radius: 8px;
   border: 1px solid #2b2b2b;
   overflow: hidden;
 }
-
 /* Chat window containing the responses */
 .chat-window {
   flex-grow: 1;
