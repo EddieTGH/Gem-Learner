@@ -5,16 +5,13 @@ import {
   Navigate,
 } from 'react-router-dom';
 import FlashcardsPage from './pages/flashcards-page/flashcards-page';
-
-// import AnalyticsPage from "./pages/analytics-page/analytics-page";
-// import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Auth from './pages/supabase-login/supabase-login';
 import LogOut from './pages/supabase-logout/supabase-logout';
 import { supabase } from './components/supabaseClient';
 import './App.css';
 import ChatBot from './pages/chat-page/chat-page';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
+import AnalyticsPage from './pages/analytics-page/analytics-page';
 import RagPage from './pages/RAG-page/rag-page';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';

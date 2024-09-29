@@ -1,4 +1,3 @@
-// flashcardUtils.js
 import { supabase } from '../components/supabaseClient';
 
 // Function to fetch flashcard sets from Supabase

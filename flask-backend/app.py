@@ -1,4 +1,3 @@
-# backend/app.py
 from flask import Flask, jsonify, request  # Import request to get data from frontend
 from flask_cors import CORS  # Import CORS from flask-cors
 import RAG  # Import the Python script as a module

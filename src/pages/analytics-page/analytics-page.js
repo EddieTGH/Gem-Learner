@@ -6,7 +6,6 @@ import './analytics-page.css';
 function AnalyticsPage({ user }) {
   const [categories, setCategories] = useState([]);
 
-  // Fetch unique categories and their counts from Supabase
   useEffect(() => {
     const fetchCategories = async () => {
       const { data, error } = await supabase

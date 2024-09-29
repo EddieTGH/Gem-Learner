@@ -1,11 +1,9 @@
-/* supabase-logout.css */
-
 .logout-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  background-color: #282828; /* Move background color here */
+  min-height: 100vh;
+  background-color: #282828;
 }
 
 .logout-box {

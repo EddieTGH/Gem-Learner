@@ -8,7 +8,6 @@ const supabase = createClient(
   apiKey
 );
 
-// Function to store chat in the Supabase database
 async function storeFlashcard(front, back, userId, setName) {
   const set_id = setName.trim() === '' ? null : setName;
   const flashcard_id = uuidv4();
