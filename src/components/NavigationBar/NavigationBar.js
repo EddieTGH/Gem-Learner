@@ -27,6 +27,11 @@ function NavigationBar() {
             Chat
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/rag-page" className="nav-link">
+            Career Prep by Pitt
+          </Link>
+        </li>
       </ul>
       <div className="spacer"></div>
       <button className="sign-out-btn" onClick={goToLogOut}>
