@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../components/supabaseClient';
-import NavigationBar from '../../components/NavigationBar/NavigationBar'; // Assuming NavigationBar is already implemented
-import './analytics-page.css'; // Styling for your Analytics page
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import './analytics-page.css';
 
-function AnalyticsPage() {
+function AnalyticsPage({ user }) {
   const [categories, setCategories] = useState([]);
 
   // Fetch unique categories and their counts from Supabase
   useEffect(() => {
     const fetchCategories = async () => {
       const { data, error } = await supabase
-        .from('Chats') // Adjust table name if different
-        .select('*');
+        .from('Chats')
+        .select('*')
+        .eq('user_id', user.id);
 
       if (error) {
         console.error('Error fetching categories:', error);
@@ -42,14 +43,17 @@ function AnalyticsPage() {
     };
 
     fetchCategories();
-  }, []);
+  }, [user.id]);
 
   return (
     <div className="page-container">
       <NavigationBar />
       <div className="analytics-container">
-        <div className="py-5">
-          <h1 className="text-white text-2xl">Analytics Page</h1>
+        <div className="greeting-container py-5">
+          <h1 className="greeting-text">Chatting Trends</h1>
+          <h2 className="text-white text-2xl">
+            What have you been asking about the most?
+          </h2>
         </div>
         <div className="analytics-content">
           {categories.length > 0 ? (

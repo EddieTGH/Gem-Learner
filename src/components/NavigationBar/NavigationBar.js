@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './NavigationBar.css'; // Import the CSS file
+import './NavigationBar.css';
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function NavigationBar() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/flashcards-page" className="nav-link">
+          <Link to="/flashcard-categories" className="nav-link">
             Flashcards
           </Link>
         </li>
