@@ -16,6 +16,7 @@ import './App.css';
 import ChatBot from './pages/chat-page/chat-page';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
+import RagPage from './pages/RAG-page/rag-page';
 
 async function initializeChat() {
   const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
@@ -91,6 +92,7 @@ function App() {
           path="/analytics-page"
           element={user ? <AnalyticsPage user={user} /> : <Navigate to="/" />}
         />
+        <Route path="/rag-page" element={<RagPage user={user} />} />
       </Routes>
     </Router>
   );

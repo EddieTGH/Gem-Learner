@@ -1,0 +1,93 @@
+/* rag-page.css */
+
+/* Main container holding the chat window and input area */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1000px;
+  min-width: 800px;
+  margin: 0 auto;
+  background-color: #494949;
+  border-radius: 8px;
+  border: 1px solid #2b2b2b;
+  overflow: hidden;
+}
+
+/* Chat window containing the responses */
+.chat-window {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Changed from column-reverse to column */
+  overflow-y: auto;
+  background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
+  border-bottom: 1px solid #ddd;
+}
+
+/* Response text styling */
+.response-text {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+  color: #333;
+  display: inline-block;
+}
+
+/* User query styling */
+.user-query {
+  background-color: #007bff;
+  color: #fff;
+  align-self: flex-end;
+  text-align: right;
+}
+
+/* Bot response styling */
+.bot-response {
+  background-color: #3c3c3c;
+  color: #fff;
+  align-self: flex-start;
+  text-align: left;
+}
+
+/* Loading spinner positioning */
+.loading {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Input area for the prompt text and button */
+.input-area {
+  display: flex;
+  padding: 10px;
+  background-color: #252525;
+  border-top: 1px solid #343434;
+}
+
+/* Input styling */
+.input-area input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #323232;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-color: inherit;
+  color: #fff;
+}
+
+/* Send button styling */
+.input-area button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background-color: #0056b3;
+}
