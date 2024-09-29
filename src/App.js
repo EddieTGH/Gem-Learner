@@ -15,7 +15,7 @@ import { supabase } from './components/supabaseClient';
 import './App.css';
 import ChatBot from './pages/chat-page/chat-page';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
+import AnalyticsPage from './pages/analytics-page/analytics-page';
 import FlashcardCategories from './pages/flashcards-page/flashcard-categories';
 
 async function initializeChat() {
@@ -59,14 +59,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* If user is logged in, redirect to /dashboard, otherwise show Auth component */}
         <Route
           path="/"
           element={
             user ? <Navigate to="/chat-page" /> : <Auth setUser={setUser} />
           }
         />
-        {/* If user is logged in, show Dashboard, otherwise redirect to / */}
         <Route
           path="/logout"
           element={
@@ -80,7 +78,6 @@ function App() {
         <Route
           path="/chat-page"
           element={
-            // <ChatBot user={user} chat={chat} />
             user ? <ChatBot user={user} chat={chat} /> : <Navigate to="/" />
           }
         />

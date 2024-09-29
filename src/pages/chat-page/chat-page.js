@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import './chat-page.css'; // Import the CSS for styling
+import './chat-page.css';
 import storeChat from '../../pages/database-example/db-store-chat';
 import storeFlashcard from '../../pages/database-example/db-store-flashcard';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import { fetchFlashcardSets } from '../../components/utils'; // Adjust path as necessary
+import { fetchFlashcardSets } from '../../components/utils';
 
 function ChatBot({ chat, user }) {
   const [inputValue, setInputValue] = useState('');
@@ -21,10 +21,10 @@ function ChatBot({ chat, user }) {
   useEffect(() => {
     const loadFlashcardSets = async () => {
       const sets = await fetchFlashcardSets(user); // Fetch sets from Supabase
-      setFlashcardSets(sets); // Store the sets in state
+      setFlashcardSets(sets);
     };
 
-    loadFlashcardSets(); // Call the function
+    loadFlashcardSets();
   }, [user]);
 
   const handleInputChange = (e) => {
@@ -126,7 +126,6 @@ function ChatBot({ chat, user }) {
 
   const getCategory = async (userQuery) => {
     try {
-      // Call the Gemini API
       const apiKeyGemini = process.env.REACT_APP_GEMINI_API_KEY;
       const { GoogleGenerativeAI } = require('@google/generative-ai');
       const genAI = new GoogleGenerativeAI(apiKeyGemini);
@@ -135,7 +134,7 @@ function ChatBot({ chat, user }) {
       const userQuery2 =
         'Here is my user query: ' +
         userQuery +
-        '. If academically related, please provide me with the subject in one/two words. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
+        '. If academically related, please provide me with the subject one word only. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
       const result = await model.generateContent(userQuery2);
       const response = result.response;
       const category = response.text();
@@ -229,7 +228,7 @@ function ChatBot({ chat, user }) {
             value={inputValue}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
-            placeholder="Ask Me Something You Want"
+            placeholder="Enter a prompt here"
             className="form-control bg-inherit text-white"
           />
           <button
