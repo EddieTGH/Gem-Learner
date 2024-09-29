@@ -1,22 +1,24 @@
 import React from 'react';
 import { supabase } from '../../components/supabaseClient';
 
-function Modal({ closeModal, currentFlashcard, deleteCard, fetchFlashcards }) {
+function Modal({ closeModal, currentFlashcard, deleteCard, updateFlashcard }) {
   const changeFlashcard = async () => {
-    console.log('first', currentFlashcard.flashcard_id);
-    const { error } = await supabase
+    const updatedFront = document.querySelector('textarea[name="front"]').value;
+    const updatedBack = document.querySelector('textarea[name="back"]').value;
+
+    const { data, error } = await supabase
       .from('Flashcards')
       .update({
-        front: document.querySelector('textarea').value,
-        back: document.querySelectorAll('textarea')[1].value,
+        front: updatedFront,
+        back: updatedBack,
       })
-      .eq('flashcard_id', currentFlashcard.flashcard_id);
+      .eq('flashcard_id', currentFlashcard.flashcard_id)
+      .select(); // Retrieve the updated data
 
     if (error) {
       console.error('Error updating flashcard:', error);
     } else {
-      await fetchFlashcards();
-      closeModal();
+      updateFlashcard(data[0]); // Update the flashcard in the parent component
     }
   };
 
@@ -27,6 +29,7 @@ function Modal({ closeModal, currentFlashcard, deleteCard, fetchFlashcards }) {
         <div className="mb-4">
           <label className="block text-gray-700">Front</label>
           <textarea
+            name="front"
             className="w-full border border-gray-300 p-2 rounded"
             defaultValue={currentFlashcard.front}
           />
@@ -34,6 +37,7 @@ function Modal({ closeModal, currentFlashcard, deleteCard, fetchFlashcards }) {
         <div className="mb-4">
           <label className="block text-gray-700">Back</label>
           <textarea
+            name="back"
             className="w-full h-48 border border-gray-300 p-4 rounded"
             defaultValue={currentFlashcard.back}
           />
