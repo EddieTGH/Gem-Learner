@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
-import NavigationBar from '../../components/NavigationBar/NavigationBar'; // Corrected path
-import './flashcards-page.css'; // Corrected path
+import { useLocation } from 'react-router-dom';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import './flashcards-page.css';
 import { supabase } from '../../components/supabaseClient';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';

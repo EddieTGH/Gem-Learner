@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import ReactMarkdown from 'react-markdown';
-import './chat-page.css'; // Import the CSS for styling
+import './chat-page.css';
 import storeConvo from '../../pages/database-example/db-store-conversation';
 import getConvo from '../../pages/database-example/db-get-conversation';
 import storeChat from '../../pages/database-example/db-store-chat';
 import storeFlashcard from '../../pages/database-example/db-store-flashcard';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import { fetchFlashcardSets } from '../../components/utils'; // Adjust path as necessary
+import { fetchFlashcardSets } from '../../components/utils';
+
 
 function ChatBot({ chat, user, convo_id }) {
 	const [inputValue, setInputValue] = useState('');
@@ -77,6 +78,7 @@ function ChatBot({ chat, user, convo_id }) {
         $$$ Response: ${queryResponse.response}. 
         Put $$$ in your response between the flashcard front (a question) and back (an answer).
       `;
+      
 			setLoading(true);
 
 			const result = await chat.sendMessage(userQuery);
@@ -273,7 +275,6 @@ function ChatBot({ chat, user, convo_id }) {
 			</div>
 		</div>
 	);
-
 }
 
 export default ChatBot;

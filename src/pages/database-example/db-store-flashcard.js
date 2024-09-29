@@ -31,15 +31,3 @@ async function storeFlashcard(front, back, userId, setName) {
 }
 
 export default storeFlashcard;
-
-// // Example usage:
-// // Let's say you get the following data from the chatbot interaction:
-// const query = "What is the capital of France?";
-// const response = "The capital of France is Paris.";
-// const category = "Geography";   // Optional
-// const userId = "some-user-uuid"; // You can fetch or create this when the user logs in
-// const chatId = "some-chat-uuid"; // Unique ID for each chat session
-// const isFlashcard = false;       // Whether this chat is related to flashcards
-
-// // Call the function to store the chat
-// storeChat(query, response, category, userId, chatId, isFlashcard);
