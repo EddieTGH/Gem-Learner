@@ -48,7 +48,12 @@ function AnalyticsPage() {
     <div className="page-container">
       <NavigationBar />
       <div className="analytics-container">
-        <h1>Analytics Page</h1>
+        <div className="greeting-container py-5">
+          <h1 className="greeting-text">Chatting Trends</h1>
+          <h2 className="text-white text-2xl">
+            What have you been asking about the most?
+          </h2>
+        </div>
         <div className="analytics-content">
           {categories.length > 0 ? (
             categories.map((item) => (
