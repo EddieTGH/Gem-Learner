@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-
 import ReactMarkdown from 'react-markdown';
 import './chat-page.css';
 import storeConvo from '../../pages/database-example/db-store-conversation';
@@ -19,6 +18,9 @@ function ChatBot({ chat, user, convo_id }) {
   const [flashcardBack, setFlashcardBack] = useState('');
   const [flashcardSets, setFlashcardSets] = useState([]);
   const [selectedSet, setSelectedSet] = useState(''); // Track the selected set
+
+  // Reference to the chat window for auto-scrolling
+  const chatWindowRef = useRef(null);
 
   // Fetch flashcard sets when component mounts
   useEffect(() => {
@@ -50,8 +52,6 @@ function ChatBot({ chat, user, convo_id }) {
   }, [promptResponses, convo_id]);
 
   // Retrieve conversations by convo_id to restore chat state after switching tabs
-  // YES, THIS YELLS AT YOU UPON FIRST LOAD
-  // NO, I DONT KNOW HOW TO FIX IT
   useEffect(() => {
     const fetchConversation = async () => {
       const fetchedConversation = await getConvo(convo_id);
@@ -64,9 +64,16 @@ function ChatBot({ chat, user, convo_id }) {
     fetchConversation();
   }, [convo_id]);
 
+  // Auto-scroll to bottom when promptResponses change
+  useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [promptResponses]);
+
   // Create flashcard by querying GPT to summarize to two sentences
   const addFlashcard = async () => {
-    if (!queryResponse.query.trim() || !queryResponse.response.trim()) return;
+    if (!queryResponse.query?.trim() || !queryResponse.response?.trim()) return;
 
     try {
       const userQuery = `
@@ -98,7 +105,7 @@ function ChatBot({ chat, user, convo_id }) {
       setLoading(false);
     }
   };
-  // Added
+
   const submitFlashcard = async () => {
     try {
       console.log('SELECTED', selectedSet);
@@ -124,18 +131,19 @@ function ChatBot({ chat, user, convo_id }) {
     try {
       const userQuery = inputValue;
       setLoading(true);
-      setPromptResponses([
+      // Append user's query to promptResponses
+      setPromptResponses((prevResponses) => [
+        ...prevResponses,
         { text: userQuery, isUser: true },
-        ...promptResponses,
       ]);
       setInputValue('');
       const result = await chat.sendMessage(userQuery);
       const response = result.response.text();
 
-      setPromptResponses([
+      // Append Gemini's response
+      setPromptResponses((prevResponses) => [
+        ...prevResponses,
         { text: response, isUser: false },
-        { text: userQuery, isUser: true },
-        ...promptResponses,
       ]);
       setQueryResponse({ query: userQuery, response: response });
 
@@ -167,7 +175,6 @@ function ChatBot({ chat, user, convo_id }) {
       const result = await model.generateContent(userQuery2);
       const response = result.response;
       const category = response.text();
-      //console.log(category);
       return category;
     } catch (error) {
       console.log(error);
@@ -189,18 +196,13 @@ function ChatBot({ chat, user, convo_id }) {
           </div>
         )}
 
-        <div className="chat-window">
-          {loading && (
-            <div className="loading text-center">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden text-white">Loading...</span>
-              </div>
-            </div>
-          )}
+        <div className="chat-window" ref={chatWindowRef}>
           {promptResponses?.map((response, index) => (
             <div
               key={index}
-              className={`response-text ${response.isUser ? 'user-query' : 'gemini-response'} ${index === 0 && !response.isUser ? 'fw-bold' : ''}`}
+              className={`response-text ${
+                response.isUser ? 'user-query' : 'gemini-response'
+              } ${index === 0 && !response.isUser ? 'fw-bold' : ''}`}
             >
               {response.isUser ? (
                 response.text
@@ -209,6 +211,13 @@ function ChatBot({ chat, user, convo_id }) {
               )}
             </div>
           ))}
+          {loading && (
+            <div className="loading text-center">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden text-white">Loading...</span>
+              </div>
+            </div>
+          )}
         </div>
         {/* Added */}
         {isEditingFlashcard && (
@@ -246,11 +255,14 @@ function ChatBot({ chat, user, convo_id }) {
             </div>
 
             <div className="flashcard-actions">
-              <button className="btn btn-primary" onClick={submitFlashcard}>
+              <button
+                className="btn btn-primary text-white"
+                onClick={submitFlashcard}
+              >
                 Save Flashcard
               </button>
               <button
-                className="btn btn-secondary"
+                className="btn btn-secondary text-white"
                 onClick={() => setIsEditingFlashcard(false)}
               >
                 Cancel

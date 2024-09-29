@@ -53,7 +53,6 @@ function RagPage() {
         '. Here is the answer I want to provide the user: ' +
         output +
         '. If the answer is completely irrelevant to the question, communicate that there is no relevant information to the users question. If there is relevant information, Please correct the answer to remove any grammar, spelling, and syntax errors. Remove all bold formatting. Keep the answer to less than 500 characters with specific, relevant information that answers the question.';
-      //'. Please correct the answer for grammar, spelling, and syntax errors. Please also make it flow better, without summarizing or generalizing. Feel free to add relevant info as needed but keep the answer to less than 600 characters';
       const result = await model.generateContent(userQuery2);
       const processedOutput = result.response;
       const processedResponse = processedOutput.text();
@@ -74,20 +73,20 @@ function RagPage() {
     <div className="flex bg-gradient-to-br from-[#1e1e1e] to-[#333333]">
       {/* Include NavigationBar if needed */}
       <NavigationBar />
-      <div className="chat-container">
-        <div className="chat-window">
+      <div className="rag-chat-container">
+        <div className="rag-chat-window">
           {promptResponses.map((response, index) => (
             <div
               key={index}
-              className={`response-text ${
-                response.isUser ? 'user-query' : 'bot-response'
+              className={`rag-response-text ${
+                response.isUser ? 'rag-user-query' : 'rag-bot-response'
               }`}
             >
               {response.text}
             </div>
           ))}
           {loading && (
-            <div className="loading text-center">
+            <div className="rag-loading text-center">
               <div className="spinner-border text-primary" role="status">
                 <span className="visually-hidden text-white">Loading...</span>
               </div>
@@ -95,7 +94,7 @@ function RagPage() {
           )}
         </div>
 
-        <div className="input-area">
+        <div className="rag-input-area">
           <input
             type="text"
             value={inputValue}

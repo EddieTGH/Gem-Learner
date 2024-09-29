@@ -1,7 +1,7 @@
 /* rag-page.css */
 
 /* Main container holding the chat window and input area */
-.chat-container {
+.rag-chat-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -15,18 +15,18 @@
 }
 
 /* Chat window containing the responses */
-.chat-window {
+.rag-chat-window {
   flex-grow: 1;
   padding: 10px;
   display: flex;
-  flex-direction: column; /* Changed from column-reverse to column */
+  flex-direction: column; /* Chats populate top to bottom */
   overflow-y: auto;
   background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
   border-bottom: 1px solid #ddd;
 }
 
 /* Response text styling */
-.response-text {
+.rag-response-text {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -37,7 +37,7 @@
 }
 
 /* User query styling */
-.user-query {
+.rag-user-query {
   background-color: #007bff;
   color: #fff;
   align-self: flex-end;
@@ -45,7 +45,7 @@
 }
 
 /* Bot response styling */
-.bot-response {
+.rag-bot-response {
   background-color: #3c3c3c;
   color: #fff;
   align-self: flex-start;
@@ -53,13 +53,13 @@
 }
 
 /* Loading spinner positioning */
-.loading {
+.rag-loading {
   padding: 10px;
   text-align: center;
 }
 
 /* Input area for the prompt text and button */
-.input-area {
+.rag-input-area {
   display: flex;
   padding: 10px;
   background-color: #252525;
@@ -67,7 +67,7 @@
 }
 
 /* Input styling */
-.input-area input {
+.rag-input-area input {
   flex-grow: 1;
   padding: 10px;
   font-size: 16px;
@@ -79,7 +79,7 @@
 }
 
 /* Send button styling */
-.input-area button {
+.rag-input-area button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -88,6 +88,8 @@
   cursor: pointer;
 }
 
-.input-area button:hover {
+.rag-input-area button:hover {
   background-color: #0056b3;
 }
+
+/* Additional styling if needed */
