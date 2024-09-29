@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+## Inspiration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Gem Learn is a tool that enhances the Google Gemini experience. Gone are the days of querying for information and forgetting the answers hours later. With Gem Learn, flashcards can be automatically created based on the most recent query and stored in sets to be learned and most importantly - reviewed and remembered later. We also have a special Career Help by Pitt section to help you land a job using Pitt CSC’s materials on preparing for interviews!
 
-## Available Scripts
+## What it does
 
-In the project directory, you can run:
+Gem Learn can be used just like Gemini, but with the added functionality of being able to save query and response pairs in a simple flash card format! We noticed that the responses from Gemini are usually pretty long, so we have a custom prompt engineering pipeline that tailors the response length to be perfect for flashcards. The user can also edit the flashcard before saving it to the database, allowing for flexibility in card creation. Once the flashcards are in the database, they can be managed by placing them in user-created sets, modifying, or deleting them. We also included an analytics panel to look at categorical trends in queries to see what you tend to search for most, and a career help page for this busy recruiting season!
 
-### `npm start`
+## How we built it
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+We built Gem Learn using React for our frontend, Supabase for the database, a Flask server, and the Google Gemini API. The chat tab is used to converse with Gemini just like in the actual app, the flashcards tab can be used to study your personalized flashcards, and the analytics tab can be accessed to view your chat trends.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Challenges we ran into
 
-### `npm test`
+Although we were all somewhat familiar with React, it was our first time working with such a large React codebase, especially considering that we were implementing a multiple-table database and integrating the Google Gemini API. It was challenging to get it all working in harmony, and things like working with CSS to get elements in the right place and wrangling all the data from chat queries to perform comprehensive analytics took up most of our time. Working together on Github and resolving merge conflicts was also a challenge, since taking a bit longer that expected on a feature could mean being multiple commits behind the main branch, leading to even more merge-related chaos.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Accomplishments that we're proud of
 
-### `npm run build`
+We’re proud that we were able to achieve our goals for this hackathon. We started off by developing levels of MVPs based on bare minimums, happy mediums, and optimistic goals. We were able to finish all of the goals that we wanted to reach, and were even able to accomplish some of our stretch goals.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## What we learned
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+As a team, we learned how to tackle a large scale project, and how to create a full stack web application with large amounts of data.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## What's next for Gem Learn
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The next steps for the app focus on enhancing the user experience and expanding functionality. First, we're adding hints to the flashcards so you can get clues without seeing the answer right away, which should help you remember things. We're also going to have different types of flashcards, like fill-in-the-blank and multiple-choice, so it fits the many different ways people like to learn. We’ll expand the number of main categories and add subcategories for flash card sets and analytics, so it's easier to focus on specific topics. We’ll also make sure the app can keep making new flashcards in the background while you’re using it, and we’ll add a way to track how well you’re learning over time, Anki-style. Plus, you’ll be able to print the flashcards if you want to study offline.
