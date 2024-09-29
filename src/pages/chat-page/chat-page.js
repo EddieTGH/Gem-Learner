@@ -163,7 +163,7 @@ function ChatBot({ chat, user, convo_id }) {
       const userQuery2 =
         'Here is my user query: ' +
         userQuery +
-        '. If academically related, please provide me with the subject in one/two words. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
+        '. If academically related, please provide me with the subject in one word only. Some examples include Computer Science, Math, Biology, Physics, History, Language, Music, Business, etc. If not academically related, please output the label "Other". Do not provide any other information.';
       const result = await model.generateContent(userQuery2);
       const response = result.response;
       const category = response.text();
