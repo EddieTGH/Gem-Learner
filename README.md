@@ -7,7 +7,7 @@ Eric Wang - eric_wang@college.harvard.edu
 
 ## What it does
 
-Gem Learn can be used just like Gemini, but with the added functionality of being able to save query and response pairs in a simple flash card format! We noticed that the responses from Gemini are usually pretty long, so we have a custom prompt engineering pipeline that tailors the response length to be perfect for flashcards. The user can also edit the flashcard before saving it to the database, allowing for flexibility in card creation. Once the flashcards are in the database, they can be managed by placing them in user-created sets, modifying, or deleting them. We also included an analytics panel to look at categorical trends in queries to see what you tend to search for most, and a career help page for this busy recruiting season!
+Gem Learn can be used just like Gemini (with chat history and contextual memory), but with the added functionality of being able to save query and response pairs in a simple flash card format! We noticed that the responses from Gemini are usually pretty long, so we have a custom prompt engineering pipeline that tailors the response length to be perfect for flashcards. The user can also edit the flashcard before saving it to the database, allowing for flexibility in card creation. Once the flashcards are in the database, they can be managed by placing them in user-created sets, modifying, or deleting them. We also included an analytics panel to look at categorical trends in queries to see what you tend to search for most, and a Pitt-specific career help chatbot built with retrieval augmented generation (RAG) and semantic retrieval for this busy recruiting season!
 
 ## How to use it
 
@@ -15,7 +15,7 @@ Unfortunately, because of Supabase authorization restrictions, in order to use G
 
 ![alt text](image.png)
 
-Once a supabase is set up as follows, a .env file has to be setup with a REACT_APP_GEMINI_API_KEY variable with a Gemini API key and a REACT_APP_SUPABASE_API_KEY variable with a supabase api key. After this, the flask-baskend should be run by using
+Once a supabase is set up as follows, a .env file has to be setup with a REACT_APP_GEMINI_API_KEY variable with a Gemini API key and a REACT_APP_SUPABASE_API_KEY variable with a supabase api key. A service_account_key.json must be setup in the flask-backend folder [Link](https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount). After this, the flask-baskend should be run by using
 
 ```
 pip install -U google-ai-generativelanguage google-auth-oauthlib google-labs-html-chunker
