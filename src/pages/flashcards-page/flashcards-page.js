@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import NavigationBar from '../../components/NavigationBar/NavigationBar'; // Corrected path
 import './flashcards-page.css'; // Corrected path
 import { supabase } from '../../components/supabaseClient';
@@ -7,7 +8,13 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from './editDeleteModal';
 
 function FlashcardsPage({ user }) {
-  const [flashcards, setFlashcards] = useState([]);
+  const location = useLocation();
+  const { flashcards: passedFlashcards, setName } = location.state || {
+    flashcards: [],
+    setName: '',
+  };
+
+  const [flashcards, setFlashcards] = useState(passedFlashcards);
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +48,11 @@ function FlashcardsPage({ user }) {
       if (event.key === 'ArrowLeft') {
         handlePrevious();
       }
-      if (event.key === ' ') {
+      if (
+        event.key === ' ' ||
+        event.key === 'ArrowUp' ||
+        event.key === 'ArrowDown'
+      ) {
         handleFlip();
       }
     };
@@ -63,39 +74,37 @@ function FlashcardsPage({ user }) {
   };
 
   const handleDelete = async () => {
+    const flashcardToDelete = flashcards[currentFlashcardIndex];
     const { error } = await supabase
       .from('Flashcards')
       .delete()
-      .eq('flashcard_id', flashcards[currentFlashcardIndex].flashcard_id);
+      .eq('flashcard_id', flashcardToDelete.flashcard_id);
 
     if (error) {
       console.error('Error deleting flashcard:', error);
     } else {
       setIsModalOpen(false); // Close modal after successful deletion
-      fetchFlashcards(); // Refetch the updated list of flashcards
+      // Remove the deleted flashcard from the state
+      setFlashcards((prevFlashcards) =>
+        prevFlashcards.filter(
+          (card) => card.flashcard_id !== flashcardToDelete.flashcard_id
+        )
+      );
+      setCurrentFlashcardIndex(0); // Reset index after deletion
     }
   };
 
-  // Fetch flashcards on component mount
-  const fetchFlashcards = useCallback(async () => {
-    if (user && user.id) {
-      const { data, error } = await supabase
-        .from('Flashcards')
-        .select('front, back, flashcard_id')
-        .eq('user_id', user.id);
-
-      if (error) {
-        console.error('Error fetching flashcards:', error);
-      } else {
-        setFlashcards(data);
-      }
-    }
-  }, [user]);
-
-  // Fetch flashcards on component mount
-  useEffect(() => {
-    fetchFlashcards();
-  }, [fetchFlashcards]);
+  // Handle flashcard update after editing
+  const handleUpdateFlashcard = (updatedFlashcard) => {
+    setFlashcards((prevFlashcards) =>
+      prevFlashcards.map((card) =>
+        card.flashcard_id === updatedFlashcard.flashcard_id
+          ? updatedFlashcard
+          : card
+      )
+    );
+    closeModal();
+  };
 
   if (totalFlashcards === 0) {
     return (
@@ -104,11 +113,7 @@ function FlashcardsPage({ user }) {
         <div className="main-content">
           <div className="greeting-container">
             <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
-            <p className="greeting-subtext">How can I help you today?</p>
-          </div>
-          <div className="flashcard-content">
-            <h1>Flashcards</h1>
-            <p>No flashcards available.</p>
+            <p className="greeting-subtext">No flashcards available.</p>
           </div>
         </div>
       </div>
@@ -122,11 +127,10 @@ function FlashcardsPage({ user }) {
       <NavigationBar />
       <div className="main-content">
         <div className="greeting-container">
-          <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
-          <p className="greeting-subtext">How can I help you today?</p>
+          <h1 className="greeting-text">{setName}</h1>
+          <p className="greeting-subtext">Study your flashcards below.</p>
         </div>
         <div className="flashcard-content">
-          <h1>Flashcards</h1>
           <div
             className={`flashcard ${isFlipped ? 'is-flipped' : ''}`}
             onClick={handleFlip}
@@ -171,7 +175,7 @@ function FlashcardsPage({ user }) {
           closeModal={closeModal}
           currentFlashcard={currentFlashcard}
           deleteCard={handleDelete}
-          fetchFlashcards={fetchFlashcards}
+          updateFlashcard={handleUpdateFlashcard} // Pass the update function
         />
       )}
     </div>
