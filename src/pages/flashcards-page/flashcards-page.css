@@ -42,6 +42,7 @@
   font-family: 'Roboto', sans-serif;
   background: linear-gradient(90deg, #ff758c, #6a11cb);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   margin-bottom: 0.5rem;
   opacity: 0;
