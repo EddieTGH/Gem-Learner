@@ -12,12 +12,12 @@ import FlashcardsPage from './pages/flashcards-page/flashcards-page';
 // import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Auth from "./pages/supabase-login/supabase-login";
 import LogOut from "./pages/supabase-logout/supabase-logout";
-import { useState, useEffect } from "react";
 import { supabase } from "./components/supabaseClient";
 import "./App.css";
 import ChatBot from "./pages/chat-page/chat-page";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import AnalyticsPage from './pages/analytics-page/analytics-page'; // Import AnalyticsPage
+import { v4 as uuidv4 } from 'uuid';
 
 async function initializeChat() {
 	const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
@@ -37,6 +37,7 @@ async function initializeChat() {
 function App() {
 	const [user, setUser] = useState(null);
 	const [chat, setChat] = useState(null);
+	const [convo_id, setId] = useState(null);
 
 	useEffect(() => {
 		const checkSession = async () => {
@@ -53,6 +54,7 @@ function App() {
 		async function init() {
 			const chatObj = await initializeChat();
 			setChat(chatObj);
+			setId(uuidv4())
 		}
 		init();
 	}, []);
@@ -83,7 +85,7 @@ function App() {
 					element={
 						// <ChatBot user={user} chat={chat} />
 						user ? (
-							<ChatBot user={user} chat={chat} />
+							<ChatBot user={user} chat={chat} convo_id={convo_id} />
 						) : (
 							<Navigate to="/" />
 						)
