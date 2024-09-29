@@ -59,48 +59,48 @@ function App() {
 		init();
 	}, []);
 
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            user ? <Navigate to="/chat-page" /> : <Auth setUser={setUser} />
-          }
-        />
-        <Route
-          path="/logout"
-          element={
-            user ? (
-              <LogOut user={user} setUser={setUser} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
-        <Route
-          path="/chat-page"
-          element={
-            user ? <ChatBot user={user} chat={chat} /> : <Navigate to="/" />
-          }
-        />
-        <Route
-          path="/flashcards-page"
-          element={user ? <FlashcardsPage user={user} /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/analytics-page"
-          element={user ? <AnalyticsPage user={user} /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/flashcard-categories"
-          element={
-            user ? <FlashcardCategories user={user} /> : <Navigate to="/" />
-          }
-        />
-      </Routes>
-    </Router>
-  );
+	return (
+		<Router>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						user ? <Navigate to="/chat-page" /> : <Auth setUser={setUser} />
+					}
+				/>
+				<Route
+					path="/logout"
+					element={
+						user ? (
+							<LogOut user={user} setUser={setUser} />
+						) : (
+							<Navigate to="/" />
+						)
+					}
+				/>
+				<Route
+					path="/chat-page"
+					element={
+						user ? <ChatBot user={user} chat={chat} convo_id={convo_id} /> : <Navigate to="/" />
+					}
+				/>
+				<Route
+					path="/flashcards-page"
+					element={user ? <FlashcardsPage user={user} /> : <Navigate to="/" />}
+				/>
+				<Route
+					path="/analytics-page"
+					element={user ? <AnalyticsPage user={user} /> : <Navigate to="/" />}
+				/>
+				<Route
+					path="/flashcard-categories"
+					element={
+						user ? <FlashcardCategories user={user} /> : <Navigate to="/" />
+					}
+				/>
+			</Routes>
+		</Router>
+	);
 
 }
 
