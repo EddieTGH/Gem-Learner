@@ -1,11 +1,11 @@
 /* Main Container */
 .flashcards-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
 }
 
-/* Navigation Bar - Takes 15% of the screen */
+/* Navigation Bar - Takes 15% of the screen, but adapts for mobile */
 .navbar {
   width: 15%;
   background-color: #1e1e1e;
@@ -15,6 +15,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  transition: width 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    width: 100%;
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    z-index: 100;
+  }
 }
 
 /* Main Content Area */
@@ -27,6 +41,14 @@
   justify-content: flex-start;
   color: #fff;
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    width: 100%;
+    padding: 2rem 1rem;
+    margin-bottom: 4rem; /* to make space for mobile navbar */
+  }
 }
 
 /* Greeting Container with animation */
@@ -73,6 +95,14 @@
   perspective: 1000px;
 }
 
+@media screen and (max-width: 768px) {
+  .flashcard {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+}
+
 .flashcard-inner {
   position: relative;
   width: 100%;
@@ -99,9 +129,9 @@
   overflow-y: auto; /* Add scroll for large content */
   backface-visibility: hidden;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-family: 'Roboto', sans-serif;
   color: #fff;
   border-radius: 15px;
@@ -117,6 +147,28 @@
 .flashcard-back {
   background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
   transform: rotateY(180deg);
+}
+
+/* Edit Button */
+.edit-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.edit-button svg {
+  font-size: 1.2rem;
+  color: #333;
 }
 
 /* Navigation Buttons - Same size, more spacing */
@@ -151,6 +203,14 @@
   transform: scale(0.98);
 }
 
+/* Mobile adjustments for navigation buttons */
+@media screen and (max-width: 768px) {
+  .navigation-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
 /* Sign Out Button */
 .navbar .sign-out {
   margin-bottom: 2rem;
@@ -170,4 +230,12 @@
 .navbar .sign-out:hover {
   background-color: #555;
   transform: scale(1.05);
+}
+
+/* Adjust sign-out button for mobile */
+@media screen and (max-width: 768px) {
+  .navbar .sign-out {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
 }
