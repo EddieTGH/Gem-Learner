@@ -30,3 +30,7 @@ npm start
 ```
 
 to run Gem Learn! There's functionality to query Gemini, create flashcards, look at analytics, and use the Pitt career help chatbot!
+
+### Check out our video demo!
+
+[Youtube](https://youtu.be/DuvRhxeNME4)
