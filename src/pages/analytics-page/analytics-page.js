@@ -48,8 +48,8 @@ function AnalyticsPage() {
     <div className="page-container">
       <NavigationBar />
       <div className="analytics-container">
-        <div className="py-5">
-          <h1 className="text-white text-2xl">Analytics Page</h1>
+        <div className="greeting-container py-5">
+          <h1 className="greeting-text">Category Breakdowns</h1>
         </div>
         <div className="analytics-content">
           {categories.length > 0 ? (
