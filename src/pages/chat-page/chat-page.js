@@ -181,6 +181,14 @@ function ChatBot({ chat, user, convo_id }) {
     <div className="flex bg-gradient-to-br from-[#1e1e1e] to-[#333333]">
       <NavigationBar />
       <div className="chat-container">
+        {/* Conditionally render the greeting based on prompt responses */}
+        {promptResponses.length === 0 && (
+          <div className="greeting-container">
+            <h1 className="greeting-text">Hello, {user?.email || 'Guest'}</h1>
+            <p className="greeting-subtext">How can I help you today?</p>
+          </div>
+        )}
+
         <div className="chat-window">
           {loading && (
             <div className="loading text-center">

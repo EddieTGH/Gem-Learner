@@ -82,7 +82,11 @@ function App() {
         <Route
           path="/chat-page"
           element={
-            user ? <ChatBot user={user} chat={chat} /> : <Navigate to="/" />
+            user ? (
+              <ChatBot user={user} chat={chat} convo_id={convo_id} />
+            ) : (
+              <Navigate to="/" />
+            )
           }
         />
         <Route
