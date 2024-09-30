@@ -58,7 +58,7 @@ https://github.com/user-attachments/assets/146cb94a-867c-4abe-ace8-3a7930f622bb
 
 Unfortunately, because of Supabase authorization restrictions, in order to use Gem Learn, Supabase has to be set up in the same format as ours. The database schema is shown below.
 
-![alt text](image.png)
+<img width="624" alt="Database Schema" src="https://github.com/user-attachments/assets/3893bc56-965e-49de-a31e-e38882c10c3b">
 
 Once a supabase is set up as follows, a .env file has to be setup with a REACT_APP_GEMINI_API_KEY variable with a Gemini API key and a REACT_APP_SUPABASE_API_KEY variable with a supabase api key. A service_account_key.json must be setup in the flask-backend folder [Link](https://developers.google.com/identity/protocols/oauth2/service-account#creatinganaccount). After this, the flask-baskend should be run by using
 
@@ -75,6 +75,10 @@ npm start
 ```
 
 to run Gem Learn! There's functionality to query Gemini, create flashcards, look at analytics, and use the Pitt career help chatbot!
+
+### Git Source Control Graph
+
+![Gem Learn Git Graph](https://github.com/user-attachments/assets/fa8ce9f8-9508-434c-af5a-b09c6c16f55a)
 
 ### Devpost
 
